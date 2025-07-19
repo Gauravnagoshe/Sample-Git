@@ -1,43 +1,15 @@
 pipeline {
-    agent any   // Run on any available agent/node
+    agent any
 
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk'
+    tools {
+        maven 'M3'  // Use the Maven tool configured in Jenkins
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/your-repo/project.git'
-            }
-        }
-
-        stage('Build') {
+        stage('Build with Maven') {
             steps {
                 sh 'mvn clean install'
             }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the application...'
-                // deployment script goes here
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline executed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
